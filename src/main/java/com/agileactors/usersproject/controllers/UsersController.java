@@ -22,30 +22,30 @@ public class UsersController {
 
     @GetMapping
     public List<User> list(){
-        return usersService.getUsersRepository().findAll();
+        return usersService.findAll();
     }
 
     @GetMapping
     @RequestMapping("{id}")
     public User get(@PathVariable Long id){
-        return usersService.getUsersRepository().getOne(id);
+        return usersService.getOne(id);
     }
 
     @PostMapping
     public User create(@RequestBody User user){
-        return usersService.getUsersRepository().saveAndFlush(user);
+        return usersService.saveAndFlush(user);
     }
 
     @RequestMapping(value="{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id){
-        usersService.getUsersRepository().deleteById(id);
+        usersService.deleteById(id);
     }
 
     @RequestMapping(value="{id}", method = RequestMethod.PUT)
     public User update(@PathVariable Long id, @RequestBody User user){
-        User existingUser = usersService.getUsersRepository().getById(id);
+        User existingUser = usersService.getOne(id);
         BeanUtils.copyProperties(user,existingUser, "user_id");
-        return usersService.getUsersRepository().saveAndFlush(existingUser);
+        return usersService.saveAndFlush(existingUser);
     }
 
 }

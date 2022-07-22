@@ -22,14 +22,11 @@ class UsersControllerTest {
     public static final long USER_ID = 22L;
     private UsersController usersController;
 
-    @InjectMocks
-    private UsersService usersService; //= mock(UsersService.class);
+    private UsersService usersService = mock(UsersService.class);
 
-    private UsersRepository usersRepository = mock(UsersRepository.class);
     private User user;
     @BeforeEach
     void setUp(){
-        MockitoAnnotations.openMocks(this);
         usersController = new UsersController(usersService);
         user = new User(10L, "John", "Alexiou", 23);
     }
@@ -37,7 +34,7 @@ class UsersControllerTest {
     @Test
     void list() {
         List<User> userL = List.of(user, user, user);
-        when(usersService.getUsersRepository().findAll()).thenReturn(userL);
+        when(usersService.findAll()).thenReturn(userL);
         List<User> userList = usersController.list();
         assertEquals(userL.get(1).getFirst_name(), userList.get(1).getFirst_name());
         assertEquals(userL.get(0).getAge(), userList.get(0).getAge());
@@ -47,7 +44,7 @@ class UsersControllerTest {
 
     @Test
     void get() {
-        when(usersService.getUsersRepository().getOne(USER_ID)).thenReturn(user);
+        when(usersService.getOne(USER_ID)).thenReturn(user);
         User user1 = usersController.get(USER_ID);
         assertEquals(user.getFirst_name(), user1.getFirst_name());
         assertEquals(user.getAge(), user1.getAge());
@@ -56,7 +53,7 @@ class UsersControllerTest {
 
     @Test
     void create() {
-        when(usersService.getUsersRepository().saveAndFlush(anyObject())).thenReturn(user);
+        when(usersService.saveAndFlush(anyObject())).thenReturn(user);
         User user1 = usersController.create(user);
         assertEquals(user.getFirst_name(), user1.getFirst_name());
         assertEquals(user.getAge(), user1.getAge());
@@ -66,13 +63,13 @@ class UsersControllerTest {
     @Test
     void delete(){
         usersController.delete(USER_ID);
-        verify(usersService.getUsersRepository()).deleteById(anyLong());
+        verify(usersService).deleteById(anyLong());
     }
     @Test
     void update(){
         User nUser = new User(23L, "Giannis", "Alexopoulos", 24);
-        when(usersService.getUsersRepository().getById(USER_ID)).thenReturn(user);
-        when(usersService.getUsersRepository().saveAndFlush(user)).thenReturn(nUser);
+        when(usersService.getOne(USER_ID)).thenReturn(user);
+        when(usersService.saveAndFlush(user)).thenReturn(nUser);
 
         User user1 = usersController.update(USER_ID, user);
 
