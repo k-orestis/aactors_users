@@ -68,8 +68,8 @@ class UsersControllerTest {
     @Test
     void update(){
         User nUser = new User(23L, "Giannis", "Alexopoulos", 24);
-        when(usersService.getOne(USER_ID)).thenReturn(user);
-        when(usersService.saveAndFlush(user)).thenReturn(nUser);
+        //when(usersService.getOne(USER_ID)).thenReturn(user);
+        when(usersService.update(USER_ID, user)).thenReturn(nUser);
 
         User user1 = usersController.update(USER_ID, user);
 

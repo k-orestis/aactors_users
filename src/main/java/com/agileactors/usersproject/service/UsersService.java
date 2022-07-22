@@ -2,6 +2,7 @@ package com.agileactors.usersproject.service;
 
 import com.agileactors.usersproject.models.User;
 import com.agileactors.usersproject.repositories.UsersRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,10 @@ import java.util.List;
 public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
+
+    public UsersService(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
 
     public UsersRepository getUsersRepository() {
         return usersRepository;
@@ -37,7 +42,11 @@ public class UsersService {
         usersRepository.deleteById(id);
     }
 
-
+    public User update(Long id, User user) {
+        User existingUser = getOne(id);
+        BeanUtils.copyProperties(user, existingUser, "user_id");
+        return saveAndFlush(existingUser);
+    }
 
 
 }
