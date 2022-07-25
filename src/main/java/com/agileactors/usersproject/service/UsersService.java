@@ -12,9 +12,9 @@ import java.util.List;
 
 @Service
 public class UsersService {
-    @Autowired
-    private UsersRepository usersRepository;
 
+    private UsersRepository usersRepository;
+    @Autowired
     public UsersService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
@@ -29,6 +29,9 @@ public class UsersService {
 
     public List<User> findAll(){
         return usersRepository.findAll();
+    }
+    public boolean existsById(Long id){
+        return usersRepository.existsById(id);
     }
 
     public User getOne(Long id){
@@ -49,4 +52,7 @@ public class UsersService {
     }
 
 
+    public User save(User user) {
+        return usersRepository.save(user);
+    }
 }

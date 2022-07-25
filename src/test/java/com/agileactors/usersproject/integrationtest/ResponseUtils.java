@@ -1,4 +1,4 @@
-package com.agileactors.usersproject.integritytest;
+package com.agileactors.usersproject.integrationtest;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,4 +30,11 @@ public class ResponseUtils {
                 .readValue(jsonBody, clazz);
    }
 
+        public static String asJsonString(Object o) {
+            try {
+                return new ObjectMapper().writeValueAsString(o);
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+        }
 }
