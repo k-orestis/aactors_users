@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+
+  server:
+    container_name: users-project-cnt
+    image: users-project
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - users-network
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    container_name: mysql
+    image: mysql
+    networks:
+      - users-network
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: users_database
+      MYSQL_USER: vdorovatas
+      MYSQL_PASSWORD: rootroot
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+
+networks:
+  users-network:
+    driver: bridge
