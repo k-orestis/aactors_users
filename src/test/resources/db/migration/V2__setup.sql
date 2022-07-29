@@ -1,5 +1,5 @@
 DELETE FROM users;
-INSERT INTO users (first_name, last_name, age)
+INSERT INTO users (first_name, last_name, age, mail)
 VALUES ('Kostas', 'Konstantinou', '25', "kostasntinou@mail.com"),
        ('Anna','Pratikaki','34', 'annaprat@mail.com'),
        ('Dimitris','Anagnostakis','19', 'dimitrisanag@mail.com'),

@@ -23,7 +23,7 @@ class UsersServiceTest {
     @BeforeEach
     void setUp(){
         usersService = new UsersService(usersRepository);
-        user = new User(10L, "John", "Alexiou", 23);
+        user = new User(10L, "John", "Alexiou", 23, "johnalex@mail.com");
     }
 
     @Test
@@ -62,9 +62,9 @@ class UsersServiceTest {
     }
     @Test
     void update(){
-        User nUser = new User(23L, "Giannis", "Alexopoulos", 24);
+        User nUser = new User(23L, "Giannis", "Alexopoulos", 24, "giannisalex@mail.com");
         when(usersRepository.getOne(USER_ID)).thenReturn(user);
-        when(usersRepository.saveAndFlush(user)).thenReturn(nUser);
+        when(usersRepository.save(user)).thenReturn(nUser);
 
         User user1 = usersService.update(USER_ID, user);
 

@@ -22,7 +22,7 @@ public class BaseIntegrity {
     User user;
     @BeforeEach
     public void setup(){
-        user = new User(22L, "Stratos", "Kosmapetris", 22, "Stratoskosma@mail.com");
+        user = new User(22L, "Stratos", "Kosmapetris", 22, "stratoskosma@mail.com");
     }
     /*
     @AfterAll

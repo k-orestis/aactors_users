@@ -18,6 +18,12 @@ public class RestResponseEntityExceptionHandler
         return new ResponseEntity<>(ex.getMessage() + " already exists", HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = WrongMailFormatException.class)
+    protected ResponseEntity<Object> wrongMail(
+            RuntimeException ex) {
+        return new ResponseEntity<>(ex.getMessage() + " has wrong format", HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(value = DataAccessException.class)
     protected ResponseEntity<Object> invalidPost(
             RuntimeException ex) {

@@ -49,7 +49,7 @@ public class UsersIntegrationTest extends BaseIntegrity{
         @Test
         public void put() throws Exception{
 
-            User userUpdated = new User(7L, "Stavros", "Kosmapetris", 32);
+            User userUpdated = new User(7L, "Stavros", "Kosmapetris", 32, "stavroskosmm@mail.com");
 
             mockMvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT + String.valueOf(id))
                             .contentType(MediaType.APPLICATION_JSON)

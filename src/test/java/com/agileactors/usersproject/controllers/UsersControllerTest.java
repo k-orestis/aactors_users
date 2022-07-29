@@ -36,7 +36,7 @@ public class UsersControllerTest extends BaseIntegrity {
 
     @Test
     public void get() throws Exception {
-        User user = new User(7L, "Stavros", "Kosmapetris", 22);
+        User user = new User(7L, "Stavros", "Kosmapetris", 22, "stavroskosm@mail.com");
         List<User> userList = List.of(user, user, user);
         doReturn(userList).when(usersService).findAll();
 
@@ -47,7 +47,7 @@ public class UsersControllerTest extends BaseIntegrity {
 
     @Test
     public void getById() throws Exception {
-        User user = new User(7L, "Stavros", "Kosmapetris", 22);
+        User user = new User(7L, "Stavros", "Kosmapetris", 22,  "stavroskosm@mail.com");
         doReturn(true).when(usersService).existsById(any());
         doReturn(user).when(usersService).getOne(any());
 
@@ -69,8 +69,8 @@ public class UsersControllerTest extends BaseIntegrity {
 
     @Test
     public void post() throws Exception{
-        User postUser = new User(7L, "Stavros", "Kosmapetris", 22);
-        User mockUser = new User(7L, "Stavros", "Kosmapetris", 22);
+        User postUser = new User(7L, "Stavros", "Kosmapetris", 22, "stavroskosm@mail.com");
+        User mockUser = new User(7L, "Stavros", "Kosmapetris", 22,  "stavroskosm@mail.com");
         doReturn(mockUser).when(usersService).save(any());
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -84,8 +84,8 @@ public class UsersControllerTest extends BaseIntegrity {
     }
     @Test
     public void put() throws Exception{
-        User putUser = new User(7L, "Stratos", "Kosmapetris", 32);
-        User mockUser = new User(7L, "Stavros", "Kosmapetris", 22);
+        User putUser = new User(7L, "Stratos", "Kosmapetris", 32,  "stavroskosm@mail.com");
+        User mockUser = new User(7L, "Stavros", "Kosmapetris", 22, "stavroskosm@mail.com");
         doReturn(true).when(usersService).existsById(any());
         doReturn(putUser).when(usersService).update(any(), any());
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT + "7")
@@ -100,7 +100,7 @@ public class UsersControllerTest extends BaseIntegrity {
     }
     @Test
     public void putNotFound() throws Exception{
-        User putUser = new User(7L, "Stratos", "Kosmapetris", 32);
+        User putUser = new User(7L, "Stratos", "Kosmapetris", 32, "stavroskosm@mail.com");
         doReturn(false).when(usersService).existsById(any());
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT + "5")
                         .contentType(MediaType.APPLICATION_JSON)

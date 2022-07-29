@@ -1,7 +1,9 @@
 package com.agileactors.usersproject.service;
 
+import com.agileactors.usersproject.exceptions.InvalidIdException;
 import com.agileactors.usersproject.exceptions.InvalidPostBodyException;
 import com.agileactors.usersproject.exceptions.MailAlreadyExistsException;
+import com.agileactors.usersproject.exceptions.WrongMailFormatException;
 import com.agileactors.usersproject.models.User;
 import com.agileactors.usersproject.repositories.UsersRepository;
 import org.springframework.beans.BeanUtils;
@@ -57,8 +59,13 @@ public class UsersService {
 
 
     public User save(User user) {
-        if(usersRepository.findAll().stream().map(User::getMail)
-                .filter(mail->mail.equals(user.getMail())).findAny().isEmpty()){
+        if(user.getAge()==0) throw new InvalidPostBodyException("");
+        if(user.getMail()!=null && (!user.getMail().contains("@") || !user.getMail().contains(".com")
+                || user.getMail().charAt(0)<'a' || user.getMail().charAt(0)>'z'))
+            throw new WrongMailFormatException(user.getMail());
+        if(usersRepository.findAll().stream()
+                .filter(user1->user1.getMail().equals(user.getMail()) && user1.getUser_id() !=user.getUser_id())
+                .findAny().isEmpty()){
             return usersRepository.save(user);}
         throw new MailAlreadyExistsException(user.getMail());
     }
