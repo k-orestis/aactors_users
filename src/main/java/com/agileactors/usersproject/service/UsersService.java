@@ -1,9 +1,13 @@
 package com.agileactors.usersproject.service;
 
+import com.agileactors.usersproject.exceptions.InvalidPostBodyException;
+import com.agileactors.usersproject.exceptions.MailAlreadyExistsException;
 import com.agileactors.usersproject.models.User;
 import com.agileactors.usersproject.repositories.UsersRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,11 +52,15 @@ public class UsersService {
     public User update(Long id, User user) {
         User existingUser = getOne(id);
         BeanUtils.copyProperties(user, existingUser, "user_id");
-        return saveAndFlush(existingUser);
+        return this.save(existingUser);
     }
 
 
     public User save(User user) {
-        return usersRepository.save(user);
+        if(usersRepository.findAll().stream().map(User::getMail)
+                .filter(mail->mail.equals(user.getMail())).findAny().isEmpty()){
+            return usersRepository.save(user);}
+        throw new MailAlreadyExistsException(user.getMail());
     }
+
 }
