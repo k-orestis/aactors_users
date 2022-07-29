@@ -16,15 +16,17 @@ public class User {
     private String first_name;
     private String last_name;
     private int age;
+    private String mail;
 
     public User(){
     }
 
-    public User(Long user_id, String first_name, String last_name, int age) {
+    public User(Long user_id, String first_name, String last_name, int age, String mail) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.age = age;
+        this.mail = mail;
     }
 
     public Long getUser_id() {
@@ -57,5 +59,13 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }
