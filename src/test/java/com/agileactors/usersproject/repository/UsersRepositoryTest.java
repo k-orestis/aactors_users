@@ -30,9 +30,9 @@ public class UsersRepositoryTest extends BaseIntegrity {
     @Test
     void testFindByIdSuccess() {
          Optional<User> user = usersRepository.findById(2L);
-        assertEquals(2, user.get().getUser_id().intValue());
-        assertEquals("Anna", user.get().getFirst_name());
-        assertEquals("Pratikaki", user.get().getLast_name());
+        assertEquals(2, user.get().getUserId().intValue());
+        assertEquals("Anna", user.get().getFirstName());
+        assertEquals("Pratikaki", user.get().getLastName());
         assertEquals(34, user.get().getAge());
     }
 
@@ -41,17 +41,17 @@ public class UsersRepositoryTest extends BaseIntegrity {
     void testSave() {
         User user = new User(7L, "Stavros", "Kosmapetraros", 28, "stavroskosma@mail.com");
         User newUser = usersRepository.saveAndFlush(user);
-        assertEquals("Stavros", newUser.getFirst_name());
-        assertEquals("Kosmapetraros", newUser.getLast_name());
+        assertEquals("Stavros", newUser.getFirstName());
+        assertEquals("Kosmapetraros", newUser.getLastName());
         assertEquals(28, newUser.getAge());
-        usersRepository.deleteById(newUser.getUser_id());
+        usersRepository.deleteById(newUser.getUserId());
     }
 
     @Test
     void testDelete() {
         User user = new User(8L, "Giorgos", "Nikou", 32, "giorgosnikou@mail.com");
         User newUser = usersRepository.saveAndFlush(user);
-        usersRepository.deleteById(newUser.getUser_id());
-        assertFalse(usersRepository.existsById(newUser.getUser_id()));
+        usersRepository.deleteById(newUser.getUserId());
+        assertFalse(usersRepository.existsById(newUser.getUserId()));
     }
 }

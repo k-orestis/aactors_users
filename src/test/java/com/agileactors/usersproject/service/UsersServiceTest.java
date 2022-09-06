@@ -31,9 +31,9 @@ class UsersServiceTest {
         List<User> userL = List.of(user, user, user);
         when(usersRepository.findAll()).thenReturn(userL);
         List<User> userList = usersService.findAll();
-        assertEquals(userL.get(1).getFirst_name(), userList.get(1).getFirst_name());
+        assertEquals(userL.get(1).getFirstName(), userList.get(1).getFirstName());
         assertEquals(userL.get(0).getAge(), userList.get(0).getAge());
-        assertEquals(userL.get(0).getLast_name(), userList.get(0).getLast_name());
+        assertEquals(userL.get(0).getLastName(), userList.get(0).getLastName());
 
     }
 
@@ -41,18 +41,18 @@ class UsersServiceTest {
     void get() {
         when(usersRepository.getOne(USER_ID)).thenReturn(user);
         User user1 = usersService.getOne(USER_ID);
-        assertEquals(user.getFirst_name(), user1.getFirst_name());
+        assertEquals(user.getFirstName(), user1.getFirstName());
         assertEquals(user.getAge(), user1.getAge());
-        assertEquals(user.getLast_name(), user1.getLast_name());
+        assertEquals(user.getLastName(), user1.getLastName());
     }
 
     @Test
     void create() {
         when(usersRepository.saveAndFlush(anyObject())).thenReturn(user);
         User user1 = usersService.saveAndFlush(user);
-        assertEquals(user.getFirst_name(), user1.getFirst_name());
+        assertEquals(user.getFirstName(), user1.getFirstName());
         assertEquals(user.getAge(), user1.getAge());
-        assertEquals(user.getLast_name(), user1.getLast_name());
+        assertEquals(user.getLastName(), user1.getLastName());
     }
 
     @Test
@@ -68,9 +68,9 @@ class UsersServiceTest {
 
         User user1 = usersService.update(USER_ID, user);
 
-        assertEquals(nUser.getFirst_name(), user1.getFirst_name());
+        assertEquals(nUser.getFirstName(), user1.getFirstName());
         assertEquals(nUser.getAge(), user1.getAge());
-        assertEquals(nUser.getLast_name(), user1.getLast_name());
+        assertEquals(nUser.getLastName(), user1.getLastName());
 
     }
 

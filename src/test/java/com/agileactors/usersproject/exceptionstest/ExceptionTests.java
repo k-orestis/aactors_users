@@ -5,12 +5,15 @@ import com.agileactors.usersproject.exceptions.InvalidIdException;
 import com.agileactors.usersproject.exceptions.InvalidPostBodyException;
 import com.agileactors.usersproject.exceptions.MailAlreadyExistsException;
 import com.agileactors.usersproject.exceptions.WrongMailFormatException;
+import com.agileactors.usersproject.integrationtest.BaseIntegrity;
 import com.agileactors.usersproject.models.User;
 import com.agileactors.usersproject.service.UsersService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.Assert.assertEquals;
@@ -18,12 +21,15 @@ import static org.junit.Assert.assertThrows;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application_test.properties")
-public class ExceptionTests {
+public class ExceptionTests extends BaseIntegrity {
+
     @Autowired
-    UsersController usersController;
+    private UsersController usersController;
     @Test
     void getByInvalidId(){
-        assertThrows(InvalidIdException.class, ()-> usersController.get(7L));
+        assertThrows(InvalidIdException.class,
+               ()-> usersController.get(7L));
+
     }
     @Test
     void postInvalidBody(){

@@ -33,7 +33,7 @@ public class UsersIntegrationTest extends BaseIntegrity{
         @BeforeEach
         public void init(){
             User nUser = usersService.saveAndFlush(user);
-            id = nUser.getUser_id();
+            id = nUser.getUserId();
         }
         @Test
         public void getById() throws Exception {
@@ -42,22 +42,22 @@ public class UsersIntegrationTest extends BaseIntegrity{
             mockMvc.perform(MockMvcRequestBuilders.get(BASE_ENDPOINT+String.valueOf(id)))
                     .andExpect(status().isOk())
                     .andExpect( content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.first_name").value("Stratos"))
-                    .andExpect(jsonPath("$.last_name").value("Kosmapetris"))
+                    .andExpect(jsonPath("$.firstName").value("Stratos"))
+                    .andExpect(jsonPath("$.lastName").value("Kosmapetris"))
                     .andExpect(jsonPath("$.age").value(22));
         }
         @Test
         public void put() throws Exception{
 
-            User userUpdated = new User(7L, "Stavros", "Kosmapetris", 32, "stavroskosmm@mail.com");
+            User userUpdated = new User(id, "Stavros", "Kosmapetris", 32, "stavroskosmm@mail.com");
 
             mockMvc.perform(MockMvcRequestBuilders.put(BASE_ENDPOINT + String.valueOf(id))
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(ResponseUtils.asJsonString(userUpdated)))
                     .andExpect(status().isOk())
                     .andExpect( content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.first_name").value("Stavros"))
-                    .andExpect(jsonPath("$.last_name").value("Kosmapetris"))
+                    .andExpect(jsonPath("$.firstName").value("Stavros"))
+                    .andExpect(jsonPath("$.lastName").value("Kosmapetris"))
                     .andExpect(jsonPath("$.age").value(32));
 
         }
@@ -80,18 +80,18 @@ public class UsersIntegrationTest extends BaseIntegrity{
 
     @Test
     public void post() throws Exception{
-
+        user = new User(22L, "Stratos", "Kosmapetris", 22, "stratoskosmas@mail.com");
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(ResponseUtils.asJsonString(user)))
                 .andExpect(status().isCreated())
                 .andExpect( content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.first_name").value("Stratos"))
-                .andExpect(jsonPath("$.last_name").value("Kosmapetris"))
+                .andExpect(jsonPath("$.firstName").value("Stratos"))
+                .andExpect(jsonPath("$.lastName").value("Kosmapetris"))
                 .andExpect(jsonPath("$.age").value(22));
 
         usersService.deleteById(usersService.findAll()
-                .stream().map(User::getUser_id)
+                .stream().map(User::getUserId)
                 .max(Long::compare).get());
 
     }
@@ -111,7 +111,7 @@ public class UsersIntegrationTest extends BaseIntegrity{
     @Test
     public void delete() throws Exception {
         User nUser = usersService.saveAndFlush(user);
-        id = nUser.getUser_id();
+        id = nUser.getUserId();
         mockMvc.perform(MockMvcRequestBuilders.delete(BASE_ENDPOINT + String.valueOf(id)))
                 .andExpect(status().isOk());
 

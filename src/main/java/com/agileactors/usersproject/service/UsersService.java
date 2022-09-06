@@ -1,6 +1,5 @@
 package com.agileactors.usersproject.service;
 
-import com.agileactors.usersproject.exceptions.InvalidIdException;
 import com.agileactors.usersproject.exceptions.InvalidPostBodyException;
 import com.agileactors.usersproject.exceptions.MailAlreadyExistsException;
 import com.agileactors.usersproject.exceptions.WrongMailFormatException;
@@ -8,11 +7,7 @@ import com.agileactors.usersproject.models.User;
 import com.agileactors.usersproject.repositories.UsersRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -53,21 +48,26 @@ public class UsersService {
 
     public User update(Long id, User user) {
         User existingUser = getOne(id);
-        BeanUtils.copyProperties(user, existingUser, "user_id");
+        BeanUtils.copyProperties(user, existingUser, "userId");
         return this.save(existingUser);
     }
-
-
-    public User save(User user) {
+    private void validateAge(User user){
         if(user.getAge()==0) throw new InvalidPostBodyException("");
+    }
+    private void validateMail(User user){
         if(user.getMail()!=null && (!user.getMail().contains("@") || !user.getMail().contains(".com")
                 || user.getMail().charAt(0)<'a' || user.getMail().charAt(0)>'z'))
             throw new WrongMailFormatException(user.getMail());
-        if(usersRepository.findAll().stream()
-                .filter(user1->user1.getMail().equals(user.getMail()) && user1.getUser_id() !=user.getUser_id())
-                .findAny().isEmpty()){
-            return usersRepository.save(user);}
+        if(!usersRepository.findAll().stream()
+                .filter(existingUser->existingUser.getMail().equals(user.getMail()) && existingUser.getUserId() !=user.getUserId())
+                .findAny().isEmpty())
         throw new MailAlreadyExistsException(user.getMail());
+    }
+    public User save(User user) {
+        validateAge(user);
+        validateMail(user);
+        return usersRepository.save(user);
+
     }
 
 }

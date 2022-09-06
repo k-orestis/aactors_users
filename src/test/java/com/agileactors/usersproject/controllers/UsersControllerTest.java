@@ -54,8 +54,8 @@ public class UsersControllerTest extends BaseIntegrity {
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_ENDPOINT+"5"))
                 .andExpect(status().isOk())
                 .andExpect( content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.first_name").value("Stavros"))
-                .andExpect(jsonPath("$.last_name").value("Kosmapetris"))
+                .andExpect(jsonPath("$.firstName").value("Stavros"))
+                .andExpect(jsonPath("$.lastName").value("Kosmapetris"))
                 .andExpect(jsonPath("$.age").value(22));
     }
 
@@ -77,8 +77,8 @@ public class UsersControllerTest extends BaseIntegrity {
                 .content(ResponseUtils.asJsonString(postUser)))
                 .andExpect(status().isCreated())
                 .andExpect( content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.first_name").value("Stavros"))
-                .andExpect(jsonPath("$.last_name").value("Kosmapetris"))
+                .andExpect(jsonPath("$.firstName").value("Stavros"))
+                .andExpect(jsonPath("$.lastName").value("Kosmapetris"))
                 .andExpect(jsonPath("$.age").value(22));
 
     }
@@ -93,8 +93,8 @@ public class UsersControllerTest extends BaseIntegrity {
                         .content(ResponseUtils.asJsonString(putUser)))
                 .andExpect(status().isOk())
                 .andExpect( content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.first_name").value("Stratos"))
-                .andExpect(jsonPath("$.last_name").value("Kosmapetris"))
+                .andExpect(jsonPath("$.firstName").value("Stratos"))
+                .andExpect(jsonPath("$.lastName").value("Kosmapetris"))
                 .andExpect(jsonPath("$.age").value(32));
 
     }

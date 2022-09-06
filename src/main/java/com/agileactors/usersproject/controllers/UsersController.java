@@ -36,7 +36,7 @@ public class UsersController {
         if(usersService.existsById(id)){
             User user = usersService.getOne(id);
             try {
-                return ResponseEntity.ok().location(new URI(String.valueOf(user.getUser_id())))
+                return ResponseEntity.ok().location(new URI(String.valueOf(user.getUserId())))
                         .body(user);
             } catch (URISyntaxException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -54,7 +54,7 @@ public class UsersController {
 
         try{
 
-            return ResponseEntity.created(new URI(String.valueOf(newUser.getUser_id())))
+            return ResponseEntity.created(new URI(String.valueOf(newUser.getUserId())))
                     .body(newUser);
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -75,7 +75,7 @@ public class UsersController {
         if(usersService.existsById(id)){
         User updatedUser = usersService.update(id, user);
             try {
-                return ResponseEntity.ok().location(new URI(String.valueOf(updatedUser.getUser_id())))
+                return ResponseEntity.ok().location(new URI(String.valueOf(updatedUser.getUserId())))
                         .body(updatedUser);
             } catch (URISyntaxException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
